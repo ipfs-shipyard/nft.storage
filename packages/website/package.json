@@ -14,8 +14,10 @@
     "@magic-ext/oauth": "^0.8.0",
     "bytes": "^3.1.0",
     "clsx": "^1.1.1",
+    "countly-sdk-web": "^20.11.3",
     "filesize": "^6.1.0",
     "ipfs-car": "0.4.3",
+    "isomorphic-form-data": "^2.0.0",
     "magic-sdk": "^4.2.1",
     "nft.storage": "^3.0.0",
     "react": "17.0.2",
@@ -23,7 +25,6 @@
     "react-if": "^4.0.1",
     "react-query": "^3.13.9",
     "swagger-ui-react": "^3.45.0",
-    "isomorphic-form-data": "^2.0.0",
     "tachyons": "^4.12.0"
   },
   "devDependencies": {

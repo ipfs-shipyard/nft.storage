@@ -5,6 +5,7 @@ import { NFTStorage } from 'nft.storage'
 import Button from '../components/button.js'
 import Loading from '../components/loading'
 import { getNfts, getToken, API } from '../lib/api.js'
+import countly from '../lib/countly.js'
 import { When } from 'react-if'
 
 /**
@@ -94,7 +95,15 @@ export default function Files({ user }) {
           <>
             <div className="flex mb3 items-center">
               <h1 className="chicagoflf mv4 flex-auto">Files</h1>
-              <Button href="/new-file" className="flex-none" id="upload">
+              <Button
+                href="/new-file"
+                className="flex-none"
+                id="upload"
+                tracking={{
+                  ui: countly.ui.FILES,
+                  action: 'Upload File',
+                }}
+              >
                 + Upload
               </Button>
             </div>
@@ -148,6 +157,11 @@ export default function Files({ user }) {
                                   type="submit"
                                   disabled={Boolean(deleting)}
                                   id="delete-nft"
+                                  tracking={{
+                                    event: countly.events.FILE_DELETE_CLICK,
+                                    ui: countly.ui.FILES,
+                                    action: 'Delete File',
+                                  }}
                                 >
                                   {deleting === nft.cid
                                     ? 'Deleting...'
@@ -167,6 +181,11 @@ export default function Files({ user }) {
                       disabled={befores.length === 1}
                       onClick={handlePrevClick}
                       id="files-previous"
+                      tracking={{
+                        event: countly.events.FILES_NAVIGATION_CLICK,
+                        ui: countly.ui.FILES,
+                        action: 'Previous',
+                      }}
                     >
                       ← Previous
                     </Button>
@@ -176,6 +195,11 @@ export default function Files({ user }) {
                       disabled={nfts.length < limit}
                       onClick={handleNextClick}
                       id="files-next"
+                      tracking={{
+                        event: countly.events.FILES_NAVIGATION_CLICK,
+                        ui: countly.ui.FILES,
+                        action: 'Next',
+                      }}
                     >
                       Next →
                     </Button>

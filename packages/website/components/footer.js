@@ -1,13 +1,25 @@
+import { useCallback } from 'react'
 import Link from 'next/link'
+
+import countly from '../lib/countly'
+
 export default function Footer() {
+  const onLinkClick = useCallback((event) => {
+    countly.trackCustomLinkClick(
+      countly.events.LINK_CLICK_FOOTER,
+      event.currentTarget
+    )
+  }, [])
+
   return (
-    <footer className="bg-black db db-m flex-ns items-center justify-between f7 white pv3 ph5">
+    <footer className="bg-black db db-m flex-ns items-center justify-between f7 white pv3 ph3 ph5-ns">
       <div>
         <span className="db db-m dib-ns mv3">
           Made with ❤️ by{' '}
           <a
             href="https://protocol.ai/"
             className="nspink underline-hover no-underline"
+            onClick={onLinkClick}
           >
             Protocol Labs
           </a>
@@ -20,6 +32,7 @@ export default function Footer() {
             className="nspink no-underline underline-hover v-mid"
             target="_blank"
             rel="noreferrer"
+            onClick={onLinkClick}
           >
             Status
           </a>
@@ -27,7 +40,10 @@ export default function Footer() {
         <Dot />
         <span className="db db-m dib-ns mv3">
           <Link href="/terms">
-            <a className="nspink no-underline underline-hover v-mid">
+            <a
+              className="nspink no-underline underline-hover v-mid"
+              onClick={onLinkClick}
+            >
               Terms of Service
             </a>
           </Link>
@@ -38,6 +54,7 @@ export default function Footer() {
           <a
             href="https://github.com/ipfs-shipyard/nft.storage/issues/new"
             className="nspink underline-hover no-underline"
+            onClick={onLinkClick}
           >
             Open an Issue
           </a>

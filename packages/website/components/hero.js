@@ -1,3 +1,4 @@
+import countly from '../lib/countly'
 import Button from './button.js'
 
 const crossStyle = {
@@ -73,6 +74,7 @@ export default function Hero() {
             <Button
               wrapperClassName="mh3 mb3"
               href="#getting-started"
+              tracking={{ ui: countly.ui.HOME_HERO, action: 'Get Started' }}
             >
               Get Started
             </Button>

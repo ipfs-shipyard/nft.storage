@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Router from 'next/router'
 import { loginEmail, loginSocial } from '../lib/magic.js'
+import countly from '../lib/countly'
 import Button from '../components/button.js'
 import { useQueryClient } from 'react-query'
 
@@ -54,7 +55,16 @@ export default function Login() {
             className="input-reset ba b--black pa2 mb2 w5 center db"
           />
 
-          <Button type="submit" disabled={disabled} wrapperClassName="w5">
+          <Button
+            type="submit"
+            disabled={disabled}
+            wrapperClassName="w5"
+            tracking={{
+              event: countly.events.LOGIN_CLICK,
+              ui: countly.ui.LOGIN,
+              action: 'Sign Up / Login',
+            }}
+          >
             Sign Up / Login
           </Button>
 
@@ -67,6 +77,11 @@ export default function Login() {
             onClick={() => {
               setIsRedirecting(true)
               loginSocial('github')
+            }}
+            tracking={{
+              event: countly.events.LOGIN_CLICK,
+              ui: countly.ui.LOGIN,
+              action: 'Github',
             }}
           >
             {isRedirecting ? 'Redirecting...' : 'Github'}
