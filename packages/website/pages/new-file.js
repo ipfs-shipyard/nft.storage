@@ -4,7 +4,9 @@ import { NFTStorage } from 'nft.storage'
 import { packToBlob } from 'ipfs-car/pack/blob'
 import { useQueryClient } from 'react-query'
 import { useState } from 'react'
+import { When } from 'react-if'
 import Box from '../components/box.js'
+import Alert from '../components/alert.js'
 import Button from '../components/button.js'
 import Link from 'next/link'
 
@@ -25,6 +27,7 @@ export default function NewFile() {
   const [uploading, setUploading] = useState(false)
   const [isCar, setIsCar] = useState(false)
   const [percentComplete, setPercentComplete] = useState(0)
+  const [error, setError] = useState('')
 
   /**
    * @param {import('react').ChangeEvent<HTMLInputElement>} e
@@ -66,12 +69,17 @@ export default function NewFile() {
             setPercentComplete(Math.round((totalBytesSent / car.size) * 100))
           },
         })
-      } catch (err) {
+
+        router.push('/files')
+        setError('')
+      } catch (/** @type any */ err) {
         console.error(err)
+        setError(
+          `Error uploading (${err.message}). Check the console for more details`
+        )
       } finally {
         await queryClient.invalidateQueries('get-nfts')
         setUploading(false)
-        router.push('/files')
       }
     }
   }
@@ -175,6 +183,25 @@ export default function NewFile() {
             </div>
           </form>
         </Box>
+        <When condition={error !== ''}>
+          <Alert
+            className="pa4 white"
+            position="bottom"
+            type="error"
+            timer={4}
+            onTimerEnd={() => setError('')}
+          >
+            <>
+              {error}{' '}
+              <button
+                className="border ml2 br-100 b--transparent pointer"
+                onClick={() => setError('')}
+              >
+                X
+              </button>
+            </>
+          </Alert>
+        </When>
       </div>
     </main>
   )

@@ -82,3 +82,29 @@
 .invisible {
   pointer-events: none;
 }
+
+.appear-from-bottom {
+  animation: appear-from-bottom 0.3s ease-in-out both;
+}
+
+.disappear-to-bottom {
+  animation: disappear-to-bottom 0.3s ease-in-out both;
+}
+
+@keyframes appear-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes disappear-to-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
