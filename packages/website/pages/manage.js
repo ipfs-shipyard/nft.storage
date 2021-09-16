@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { If, Then, Else, When } from 'react-if'
 import Button from '../components/button.js'
 import { deleteToken, getTokens } from '../lib/api'
+import countly from '../lib/countly.js'
 import { useQuery, useQueryClient } from 'react-query'
 import Loading from '../components/loading.js'
 
@@ -83,7 +84,12 @@ export default function ManageKeys({ user }) {
           <Else>
             <div className="flex mb3 items-center">
               <h1 className="chicagoflf mv4 flex-auto">API Keys</h1>
-              <Button href="/new-key" className="flex-none" id="new-key">
+              <Button
+                href="/new-key"
+                className="flex-none"
+                id="new-key"
+                tracking={{ ui: countly.ui.TOKENS, action: 'New API Token' }}
+              >
                 + New Key
               </Button>
             </div>
@@ -115,6 +121,10 @@ export default function ManageKeys({ user }) {
                             className="bg-white black"
                             type="submit"
                             id="copy-key"
+                            tracking={{
+                              event: countly.events.TOKEN_COPY,
+                              ui: countly.ui.TOKENS,
+                            }}
                           >
                             {copied === t[1] ? 'Copied!' : 'Copy'}
                           </Button>
@@ -133,6 +143,10 @@ export default function ManageKeys({ user }) {
                             type="submit"
                             disabled={Boolean(deleting)}
                             id="delete-key"
+                            tracking={{
+                              event: countly.events.TOKEN_DELETE,
+                              ui: countly.ui.TOKENS,
+                            }}
                           >
                             {deleting === t[0] ? 'Deleting...' : 'Delete'}
                           </Button>

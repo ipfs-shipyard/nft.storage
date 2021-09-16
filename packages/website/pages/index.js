@@ -1,3 +1,6 @@
+import { useCallback } from 'react'
+
+import countly from '../lib/countly.js'
 import Hero from '../components/hero.js'
 import HashLink from '../components/hashlink.js'
 import Step from '../components/step.js'
@@ -174,6 +177,16 @@ function About() {
 }
 
 function GettingStarted() {
+  const onClickHandler = useCallback((event) => {
+    countly.trackCustomLinkClick(
+      countly.events.CTA_LINK_CLICK,
+      event.currentTarget,
+      {
+        ui: countly.ui.HOME_GET_STARTED,
+      }
+    )
+  }, [])
+
   const jsEx = `import { NFTStorage, File } from 'nft.storage'
 
 const apiKey = 'YOUR_API_KEY'
@@ -205,7 +218,10 @@ console.log(metadata.url)
             <Step>1</Step>
             <p className="chicagoflf f3 mw6 center">
               <Link href="/login">
-                <a className="no-underline underline-hover nsnavy">
+                <a
+                  className="no-underline underline-hover nsnavy"
+                  onClick={onClickHandler}
+                >
                   Register an nft.storage account
                 </a>
               </Link>{' '}
@@ -223,7 +239,10 @@ console.log(metadata.url)
             <Step>2</Step>
             <p className="chicagoflf f3 mw6 center">
               <Link href="/manage">
-                <a className="no-underline underline-hover nsnavy">
+                <a
+                  className="no-underline underline-hover nsnavy"
+                  onClick={onClickHandler}
+                >
                   Create an API access key
                 </a>
               </Link>{' '}

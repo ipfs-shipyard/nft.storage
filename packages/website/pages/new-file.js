@@ -1,4 +1,5 @@
 import { getToken, API } from '../lib/api'
+import countly from '../lib/countly.js'
 import { useRouter } from 'next/router'
 import { NFTStorage } from 'nft.storage'
 import { packToBlob } from 'ipfs-car/pack/blob'
@@ -148,6 +149,10 @@ export default function NewFile() {
                 type="submit"
                 disabled={uploading}
                 id="upload-file"
+                tracking={{
+                  event: countly.events.FILE_UPLOAD_CLICK,
+                  ui: countly.ui.NEW_FILE,
+                }}
               >
                 {uploading
                   ? `Uploading...${
