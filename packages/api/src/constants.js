@@ -55,3 +55,8 @@ export const database = {
 }
 
 export const isDebug = DEBUG === 'true'
+
+export const maintenance = {
+  /** @type {import('./middleware/maintenance').Mode} */
+  mode: typeof MAINTENANCE_MODE !== 'undefined' ? MAINTENANCE_MODE : 'rw',
+}
