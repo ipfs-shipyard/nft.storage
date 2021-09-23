@@ -12,7 +12,7 @@
     "deploy": "wrangler publish --env production",
     "dev": "wrangler dev",
     "test": "tsc && playwright-test \"test/**/*.spec.js\" --sw src/index.js",
-    "db-types": "./scripts/db-types.js"
+    "db-types": "./scripts/cli.js db-types"
   },
   "author": "Hugo Dias <hugomrdias@gmail.com> (hugodias.me)",
   "license": "MIT",

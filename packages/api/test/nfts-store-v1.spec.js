@@ -62,7 +62,9 @@ describe('V1 - /store', () => {
 
     const { data, error } = await rawClient
       .from('upload')
-      .select('*, content(cid, dag_size, pin(content_cid, status, service))')
+      .select(
+        '*, content(cid, dag_size, pin:pin_view(content_cid, status, service))'
+      )
       .match({ content_cid: result.ipnft, account_id: userId })
       .single()
 

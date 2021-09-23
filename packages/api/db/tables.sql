@@ -1,12 +1,12 @@
--- Pin status 
+-- Pin status Type
 CREATE TYPE pin_status_type AS ENUM (
-    'queued',
-    'pinning',
-    'pinned',
-    'failed'
+    'PinError',
+    'PinQueued',
+    'Pinned',
+    'Pinning'
     );
 
--- Pin Services
+-- Pin Services Type
 CREATE TYPE service_type AS ENUM ('Pinata', 'IpfsCluster');
 
 -- Upload Type
@@ -62,6 +62,26 @@ CREATE TABLE IF NOT EXISTS pin
     updated_at  TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     UNIQUE (content_cid, service)
 );
+
+-- Pin view with api response status
+CREATE OR REPLACE VIEW pin_view
+AS
+SELECT id,
+       CASE
+           WHEN status = 'PinQueued'
+               THEN 'queued'
+           WHEN status = 'Pinned'
+               THEN 'pinned'
+           WHEN status = 'Pinning'
+               THEN 'pinning'
+           WHEN status = 'PinError'
+               THEN 'failed'
+           END status,
+       content_cid,
+       service,
+       inserted_at,
+       updated_at
+FROM pin;
 
 
 -- removed_at and add the on conflict logic to the function, null or date depending on the situation

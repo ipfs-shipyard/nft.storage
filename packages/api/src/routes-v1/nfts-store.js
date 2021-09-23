@@ -68,16 +68,6 @@ export async function nftStoreV1(event, ctx) {
     dag_size: bytes,
     account_id: user.id,
     key_id: key?.id,
-    pins: [
-      {
-        status: 'queued',
-        service: 'IpfsCluster',
-      },
-      {
-        status: 'queued',
-        service: 'Pinata',
-      },
-    ],
   })
 
   const result = {

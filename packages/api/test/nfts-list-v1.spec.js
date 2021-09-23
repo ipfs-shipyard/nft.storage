@@ -88,12 +88,6 @@ describe('V1 - List NFTs', () => {
         content_cid: `bafy${i}`,
         source_cid: `bafy${i}`,
         type: 'Blob',
-        pins: [
-          {
-            status: 'queued',
-            service: 'IpfsCluster',
-          },
-        ],
       })
     }
 

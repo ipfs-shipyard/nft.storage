@@ -545,6 +545,108 @@ export interface paths {
       }
     }
   }
+  '/pin_view': {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters['rowFilter.pin_view.id']
+          status?: parameters['rowFilter.pin_view.status']
+          content_cid?: parameters['rowFilter.pin_view.content_cid']
+          service?: parameters['rowFilter.pin_view.service']
+          inserted_at?: parameters['rowFilter.pin_view.inserted_at']
+          updated_at?: parameters['rowFilter.pin_view.updated_at']
+          /** Filtering Columns */
+          select?: parameters['select']
+          /** Ordering */
+          order?: parameters['order']
+          /** Limiting and Pagination */
+          offset?: parameters['offset']
+          /** Limiting and Pagination */
+          limit?: parameters['limit']
+        }
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters['range']
+          /** Limiting and Pagination */
+          'Range-Unit'?: parameters['rangeUnit']
+          /** Preference */
+          Prefer?: parameters['preferCount']
+        }
+      }
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions['pin_view'][]
+        }
+        /** Partial Content */
+        206: unknown
+      }
+    }
+    post: {
+      parameters: {
+        body: {
+          /** pin_view */
+          pin_view?: definitions['pin_view']
+        }
+        query: {
+          /** Filtering Columns */
+          select?: parameters['select']
+        }
+        header: {
+          /** Preference */
+          Prefer?: parameters['preferReturn']
+        }
+      }
+      responses: {
+        /** Created */
+        201: unknown
+      }
+    }
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters['rowFilter.pin_view.id']
+          status?: parameters['rowFilter.pin_view.status']
+          content_cid?: parameters['rowFilter.pin_view.content_cid']
+          service?: parameters['rowFilter.pin_view.service']
+          inserted_at?: parameters['rowFilter.pin_view.inserted_at']
+          updated_at?: parameters['rowFilter.pin_view.updated_at']
+        }
+        header: {
+          /** Preference */
+          Prefer?: parameters['preferReturn']
+        }
+      }
+      responses: {
+        /** No Content */
+        204: never
+      }
+    }
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters['rowFilter.pin_view.id']
+          status?: parameters['rowFilter.pin_view.status']
+          content_cid?: parameters['rowFilter.pin_view.content_cid']
+          service?: parameters['rowFilter.pin_view.service']
+          inserted_at?: parameters['rowFilter.pin_view.inserted_at']
+          updated_at?: parameters['rowFilter.pin_view.updated_at']
+        }
+        body: {
+          /** pin_view */
+          pin_view?: definitions['pin_view']
+        }
+        header: {
+          /** Preference */
+          Prefer?: parameters['preferReturn']
+        }
+      }
+      responses: {
+        /** No Content */
+        204: never
+      }
+    }
+  }
   '/upload': {
     get: {
       parameters: {
@@ -726,7 +828,7 @@ export interface paths {
       parameters: {
         body: {
           args: {
-            cid: string
+            cids: string
           }
         }
         header: {
@@ -839,7 +941,7 @@ export interface definitions {
      * This is a Primary Key.<pk/>
      */
     id: number
-    status: 'queued' | 'pinning' | 'pinned' | 'failed'
+    status: 'PinError' | 'PinQueued' | 'Pinned' | 'Pinning'
     /**
      * Note:
      * This is a Foreign Key to `content.cid`.<fk table='content' column='cid'/>
@@ -848,6 +950,22 @@ export interface definitions {
     service: 'Pinata' | 'IpfsCluster'
     inserted_at: string
     updated_at: string
+  }
+  pin_view: {
+    /**
+     * Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: number
+    status?: string
+    /**
+     * Note:
+     * This is a Foreign Key to `content.cid`.<fk table='content' column='cid'/>
+     */
+    content_cid?: string
+    service?: 'Pinata' | 'IpfsCluster'
+    inserted_at?: string
+    updated_at?: string
   }
   upload: {
     /**
@@ -966,6 +1084,14 @@ export interface parameters {
   'rowFilter.pin.service': string
   'rowFilter.pin.inserted_at': string
   'rowFilter.pin.updated_at': string
+  /** pin_view */
+  'body.pin_view': definitions['pin_view']
+  'rowFilter.pin_view.id': string
+  'rowFilter.pin_view.status': string
+  'rowFilter.pin_view.content_cid': string
+  'rowFilter.pin_view.service': string
+  'rowFilter.pin_view.inserted_at': string
+  'rowFilter.pin_view.updated_at': string
   /** upload */
   'body.upload': definitions['upload']
   'rowFilter.upload.id': string

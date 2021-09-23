@@ -51,16 +51,6 @@ export async function uploadV1(event, ctx) {
         name: f.name,
         type: f.type,
       })),
-      pins: [
-        {
-          status: 'queued',
-          service: 'IpfsCluster',
-        },
-        {
-          status: 'queued',
-          service: 'Pinata',
-        },
-      ],
     })
   } else {
     const blob = await event.request.blob()
@@ -91,16 +81,6 @@ export async function uploadV1(event, ctx) {
       account_id: user.id,
       files: [],
       key_id: key?.id,
-      pins: [
-        {
-          status: 'queued',
-          service: 'IpfsCluster',
-        },
-        {
-          status: 'queued',
-          service: 'Pinata',
-        },
-      ],
     })
   }
 

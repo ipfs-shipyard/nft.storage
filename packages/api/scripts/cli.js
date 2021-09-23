@@ -6,13 +6,11 @@ import { fileURLToPath } from 'url'
 import { build } from 'esbuild'
 import Sentry from '@sentry/cli'
 import { createRequire } from 'module'
-import pg from 'pg'
-import fs from 'fs'
-import execa from 'execa'
-
-const { Client } = pg
 // @ts-ignore
 import git from 'git-rev-sync'
+import { dbCmd } from './cmds/db.js'
+import { dbSqlCmd } from './cmds/db-sql.js'
+import { dbTypesCmd } from './cmds/db-types.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const require = createRequire(__dirname)
@@ -90,73 +88,7 @@ prog
   .option('--reset', 'Reset db before running SQL.', false)
   .option('--cargo', 'Import cargo data.', false)
   .option('--testing', 'Tweak schema for testing.', false)
-  .action(async (opts) => {
-    const client = new Client({
-      connectionString: process.env.DATABASE_CONNECTION,
-    })
-    await client.connect()
-    const tables = fs.readFileSync(path.join(__dirname, '../db/tables.sql'), {
-      encoding: 'utf-8',
-    })
-    const functions = fs.readFileSync(
-      path.join(__dirname, '../db/functions.sql'),
-      {
-        encoding: 'utf-8',
-      }
-    )
-    const reset = fs.readFileSync(path.join(__dirname, '../db/reset.sql'), {
-      encoding: 'utf-8',
-    })
-    let cargo = fs.readFileSync(path.join(__dirname, '../db/cargo.sql'), {
-      encoding: 'utf-8',
-    })
-
-    let fdw = fs.readFileSync(path.join(__dirname, '../db/fdw.sql'), {
-      encoding: 'utf-8',
-    })
-    fdw = fdw.replace(":'DAG_CARGO_HOST'", `'${process.env.DAG_CARGO_HOST}'`)
-    fdw = fdw.replace(
-      ":'DAG_CARGO_DATABASE'",
-      `'${process.env.DAG_CARGO_DATABASE}'`
-    )
-    fdw = fdw.replace(":'DAG_CARGO_USER'", `'${process.env.DAG_CARGO_USER}'`)
-    fdw = fdw.replace(
-      ":'DAG_CARGO_PASSWORD'",
-      `'${process.env.DAG_CARGO_PASSWORD}'`
-    )
-
-    if (opts.reset) {
-      await client.query(reset)
-    }
-
-    await client.query(tables)
-
-    if (opts.cargo) {
-      if (opts.testing) {
-        cargo = cargo.replace(
-          `
--- Create materialized view from cargo "aggregate_entries" table
-CREATE MATERIALIZED VIEW public.aggregate_entry
-AS
-SELECT *
-FROM cargo.aggregate_entries;`,
-          `
-CREATE MATERIALIZED VIEW public.aggregate_entry
-AS
-SELECT *
-FROM cargo.aggregate_entries 
-WHERE cid_v1 in ('bafybeiaj5yqocsg5cxsuhtvclnh4ulmrgsmnfbhbrfxrc3u2kkh35mts4e');
-`
-        )
-      }
-
-      await client.query(fdw)
-      await client.query(cargo)
-    }
-
-    await client.query(functions)
-    await client.end()
-  })
+  .action(dbSqlCmd)
   .command('db')
   .describe('Run docker compose to setup pg and pgrest')
   .option('--init', 'Init docker container', false)
@@ -164,62 +96,9 @@ WHERE cid_v1 in ('bafybeiaj5yqocsg5cxsuhtvclnh4ulmrgsmnfbhbrfxrc3u2kkh35mts4e');
   .option('--stop', 'Stop docker container', false)
   .option('--project', 'Project name', 'nft-storage')
   .option('--clean', 'Clean all dockers artifacts', false)
-  .action(async (opts) => {
-    const composePath = path.join(__dirname, '../db/docker/docker-compose.yml')
-    if (opts.init) {
-      await execa('docker-compose', [
-        '--file',
-        composePath,
-        'build',
-        '--no-cache',
-      ])
-
-      await execa('docker-compose', [
-        '--file',
-        composePath,
-        '--project-name',
-        opts.project,
-        'up',
-        '--build',
-        '--no-start',
-        '--renew-anon-volumes',
-      ])
-    }
-
-    if (opts.start) {
-      await execa('docker-compose', [
-        '--file',
-        composePath,
-        '--project-name',
-        opts.project,
-        'up',
-        '--detach',
-      ])
-    }
-
-    if (opts.stop) {
-      await execa('docker-compose', [
-        '--file',
-        composePath,
-        '--project-name',
-        opts.project,
-        'stop',
-      ])
-    }
-
-    if (opts.clean) {
-      await execa('docker-compose', [
-        '--file',
-        composePath,
-        '--project-name',
-        opts.project,
-        'down',
-        '--rmi',
-        'local',
-        '-v',
-        '--remove-orphans',
-      ])
-    }
-  })
+  .action(dbCmd)
+  .command('db-types')
+  .describe('Database openapi types')
+  .action(dbTypesCmd)
 
 prog.parse(process.argv)

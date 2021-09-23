@@ -62,7 +62,19 @@ export class DBClient {
    */
   async createUpload(data) {
     const rsp = await this.client.rpc('upload_fn', {
-      data,
+      data: {
+        ...data,
+        pins: [
+          {
+            status: 'PinQueued',
+            service: 'IpfsCluster',
+          },
+          {
+            status: 'PinQueued',
+            service: 'Pinata',
+          },
+        ],
+      },
     })
     if (rsp.error) {
       throw new Error(JSON.stringify(rsp.error))
@@ -79,7 +91,7 @@ export class DBClient {
         *,
         user:account(id, magic_link_id),
         key:auth_key(name),
-        content(dag_size, pin(status, service))`
+        content(dag_size, pin:pin_view(status, service))`
 
   /**
    * Get upload with user, auth_keys, content and pins
@@ -221,7 +233,7 @@ export class DBClient {
         dag_size,
         inserted_at,
         updated_at,
-        pins:pin(status, service)`
+        pins:pin_view(status, service)`
       )
       // @ts-ignore
       .filter('pins.service', 'eq', 'IpfsCluster')
