@@ -1,6 +1,6 @@
 {
   "name": "nft.storage",
-  "version": "3.2.2",
+  "version": "3.3.0",
   "description": "nft.storage client",
   "license": "(Apache-2.0 AND MIT)",
   "type": "module",
