@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.5.0](https://www.github.com/ipfs-shipyard/nft.storage/compare/api-v2.4.0...api-v2.5.0) (2021-09-24)
+
+
+### Features
+
+* migrate database to postgres  ([#263](https://www.github.com/ipfs-shipyard/nft.storage/issues/263)) ([ff0c919](https://www.github.com/ipfs-shipyard/nft.storage/commit/ff0c919ad63f8452357ff5f23b3f1ecd24880c86))
+
+
+### Bug Fixes
+
+* remove nft index cron job ([#453](https://www.github.com/ipfs-shipyard/nft.storage/issues/453)) ([a93433c](https://www.github.com/ipfs-shipyard/nft.storage/commit/a93433c56ba303e10b7c594d83b02c7c6af1a1ec))
+* remove usage_model from top level ([#463](https://www.github.com/ipfs-shipyard/nft.storage/issues/463)) ([9d9391d](https://www.github.com/ipfs-shipyard/nft.storage/commit/9d9391d1a9d9eded82bdd834e70bcfcce0024770))
+
 ## [2.4.0](https://www.github.com/ipfs-shipyard/nft.storage/compare/api-v2.3.1...api-v2.4.0) (2021-08-27)
 
 
