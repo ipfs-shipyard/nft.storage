@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/ipfs-shipyard/nft.storage/compare/tools-v1.2.0...tools-v1.3.0) (2021-09-24)
+
+
+### Features
+
+* migrate database to postgres  ([#263](https://www.github.com/ipfs-shipyard/nft.storage/issues/263)) ([ff0c919](https://www.github.com/ipfs-shipyard/nft.storage/commit/ff0c919ad63f8452357ff5f23b3f1ecd24880c86))
+
+
+### Bug Fixes
+
+* niftysave pin job failures by adopting request timeouts ([#267](https://www.github.com/ipfs-shipyard/nft.storage/issues/267)) ([0bac638](https://www.github.com/ipfs-shipyard/nft.storage/commit/0bac6385ef0417a7a3453172bf3a3ed9e664f9e6))
+
 ## [1.2.0](https://www.github.com/ipfs-shipyard/nft.storage/compare/tools-v1.1.0...tools-v1.2.0) (2021-07-13)
 
 
