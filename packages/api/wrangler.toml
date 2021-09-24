@@ -33,9 +33,9 @@ kv_namespaces = [
 ENV = "dev"
 DEBUG = "*"
 DATABASE_URL = "https://ryoouiwnemjhenyqqlhp.supabase.co/rest/v1"
-CLUSTER_API_URL = "https://nft.storage.ipfscluster.io/api/"
-CLUSTER_IPFS_PROXY_API_URL = "https://nft.storage.ipfscluster.io/api/v0/"
-CLUSTER_ADDRS = "/dns4/nft-storage-am6.nft.dwebops.net/tcp/18402/p2p/12D3KooWCRscMgHgEo3ojm8ovzheydpvTEqsDtq7Vby38cMHrYjt,/dns4/nft-storage-dc13.nft.dwebops.net/tcp/18402/p2p/12D3KooWQtpvNvUYFzAo1cRYkydgk15JrMSHp6B6oujqgYSnvsVm,/dns4/nft-storage-sv15.nft.dwebops.net/tcp/18402/p2p/12D3KooWQcgCwNCTYkyLXXQSZuL5ry1TzpM8PRe9dKddfsk1BxXZ"
+CLUSTER_API_URL = "https://nft2.storage.ipfscluster.io/api/"
+CLUSTER_IPFS_PROXY_API_URL = "https://nft2.storage.ipfscluster.io/api/v0/"
+CLUSTER_ADDRS = "/dns4/nft2-storage-dc13-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMZmMp9QwmfJdq3aXXstMbTCCB3FTWv9SNLdQGqyPMdUw,/dns4/nft2-storage-dc13-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWCpu8Nk4wmoXSsVeVSVzVHmrwBnEoC9jpcVpeWP7n67Bt,/dns4/nft2-storage-sv15-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWGx5pFFG7W2EG8N6FFwRLh34nHcCLMzoBSMSSpHcJYN7G,/dns4/nft2-storage-sv15-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWQsVxhA43ZjGNUDfF9EEiNYxb1PVEgCBMNj87E9cg92vT,/dns4/nft2-storage-am6-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMSrRXHgbBTsNGfxG1E44fLB6nJ5wpjavXj4VGwXKuz9X,/dns4/nft2-storage-am6-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWE48wcXK7brQY1Hw7LhjF3xdiFegLnCAibqDtyrgdxNgn"
 
 [build]
 command = "scripts/cli.js build"
@@ -70,9 +70,9 @@ kv_namespaces = [
 [env.staging.vars]
 ENV = "staging"
 DEBUG = ""
-CLUSTER_API_URL = "https://nft.storage.ipfscluster.io/api/"
-CLUSTER_IPFS_PROXY_API_URL = "https://nft.storage.ipfscluster.io/api/v0/"
-CLUSTER_ADDRS = "/dns4/nft-storage-am6.nft.dwebops.net/tcp/18402/p2p/12D3KooWCRscMgHgEo3ojm8ovzheydpvTEqsDtq7Vby38cMHrYjt,/dns4/nft-storage-dc13.nft.dwebops.net/tcp/18402/p2p/12D3KooWQtpvNvUYFzAo1cRYkydgk15JrMSHp6B6oujqgYSnvsVm,/dns4/nft-storage-sv15.nft.dwebops.net/tcp/18402/p2p/12D3KooWQcgCwNCTYkyLXXQSZuL5ry1TzpM8PRe9dKddfsk1BxXZ"
+CLUSTER_API_URL = "https://nft2.storage.ipfscluster.io/api/"
+CLUSTER_IPFS_PROXY_API_URL = "https://nft2.storage.ipfscluster.io/api/v0/"
+CLUSTER_ADDRS = "/dns4/nft2-storage-dc13-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMZmMp9QwmfJdq3aXXstMbTCCB3FTWv9SNLdQGqyPMdUw,/dns4/nft2-storage-dc13-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWCpu8Nk4wmoXSsVeVSVzVHmrwBnEoC9jpcVpeWP7n67Bt,/dns4/nft2-storage-sv15-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWGx5pFFG7W2EG8N6FFwRLh34nHcCLMzoBSMSSpHcJYN7G,/dns4/nft2-storage-sv15-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWQsVxhA43ZjGNUDfF9EEiNYxb1PVEgCBMNj87E9cg92vT,/dns4/nft2-storage-am6-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMSrRXHgbBTsNGfxG1E44fLB6nJ5wpjavXj4VGwXKuz9X,/dns4/nft2-storage-am6-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWE48wcXK7brQY1Hw7LhjF3xdiFegLnCAibqDtyrgdxNgn"
 DATABASE_URL = "https://db-staging.nft.storage"
 
 [env.staging.build]
@@ -103,9 +103,9 @@ kv_namespaces = [
 [env.production.vars]
 ENV = "production"
 DEBUG = ""
-CLUSTER_API_URL = "https://nft.storage.ipfscluster.io/api/"
-CLUSTER_IPFS_PROXY_API_URL = "https://nft.storage.ipfscluster.io/api/v0/"
-CLUSTER_ADDRS = "/dns4/nft-storage-am6.nft.dwebops.net/tcp/18402/p2p/12D3KooWCRscMgHgEo3ojm8ovzheydpvTEqsDtq7Vby38cMHrYjt,/dns4/nft-storage-dc13.nft.dwebops.net/tcp/18402/p2p/12D3KooWQtpvNvUYFzAo1cRYkydgk15JrMSHp6B6oujqgYSnvsVm,/dns4/nft-storage-sv15.nft.dwebops.net/tcp/18402/p2p/12D3KooWQcgCwNCTYkyLXXQSZuL5ry1TzpM8PRe9dKddfsk1BxXZ"
+CLUSTER_API_URL = "https://nft2.storage.ipfscluster.io/api/"
+CLUSTER_IPFS_PROXY_API_URL = "https://nft2.storage.ipfscluster.io/api/v0/"
+CLUSTER_ADDRS = "/dns4/nft2-storage-dc13-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMZmMp9QwmfJdq3aXXstMbTCCB3FTWv9SNLdQGqyPMdUw,/dns4/nft2-storage-dc13-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWCpu8Nk4wmoXSsVeVSVzVHmrwBnEoC9jpcVpeWP7n67Bt,/dns4/nft2-storage-sv15-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWGx5pFFG7W2EG8N6FFwRLh34nHcCLMzoBSMSSpHcJYN7G,/dns4/nft2-storage-sv15-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWQsVxhA43ZjGNUDfF9EEiNYxb1PVEgCBMNj87E9cg92vT,/dns4/nft2-storage-am6-1.nft2.dwebops.net/tcp/4001/p2p/12D3KooWMSrRXHgbBTsNGfxG1E44fLB6nJ5wpjavXj4VGwXKuz9X,/dns4/nft2-storage-am6-2.nft2.dwebops.net/tcp/4001/p2p/12D3KooWE48wcXK7brQY1Hw7LhjF3xdiFegLnCAibqDtyrgdxNgn"
 DATABASE_URL = "https://db.nft.storage"
 
 [env.production.build]
