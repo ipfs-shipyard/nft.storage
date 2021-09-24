@@ -1,0 +1,45 @@
+#!/bin/bash
+
+CONF_PATH="$2"
+
+#available config options
+config_settings=(
+  db-uri
+  db-schema
+  db-anon-role
+  db-pool
+  db-pool-timeout
+  db-extra-search-path
+  server-host
+  server-port
+  server-unix-socket
+  server-unix-socket-mode
+  openapi-server-proxy-uri
+  server-proxy-uri
+  jwt-secret
+  jwt-aud
+  secret-is-base64
+  max-rows
+  pre-request
+  role-claim-key
+  raw-media-types
+)
+
+for conf in "${config_settings[@]}"; do
+  var=`echo ${conf^^} | tr - _`
+  val="${!var:-}"
+  if [ "$val" ]; then
+    if [[ $val =~ [^0-9] ]]; then
+      # non-numbers must be quoted
+      echo "${conf}=\"${val}\"" >> $CONF_PATH
+    else
+      echo "${conf}=${val}" >> $CONF_PATH
+    fi
+  fi
+done
+
+# Bind to correct host and port for Heroku
+echo "server-host=\"0.0.0.0\"" >> $CONF_PATH
+echo "server-port=${PORT}" >> $CONF_PATH
+
+exec "$@"
