@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://www.github.com/ipfs-shipyard/nft.storage/compare/nft.storage-v3.2.2...nft.storage-v3.3.0) (2021-09-24)
+
+
+### Features
+
+* migrate database to postgres  ([#263](https://www.github.com/ipfs-shipyard/nft.storage/issues/263)) ([ff0c919](https://www.github.com/ipfs-shipyard/nft.storage/commit/ff0c919ad63f8452357ff5f23b3f1ecd24880c86))
+
 ### [3.2.2](https://www.github.com/ipfs-shipyard/nft.storage/compare/nft.storage-v3.2.1...nft.storage-v3.2.2) (2021-09-14)
 
 
