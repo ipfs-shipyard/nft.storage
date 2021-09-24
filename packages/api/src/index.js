@@ -35,6 +35,12 @@ import { pinsAddV1 } from './routes-v1/pins-add.js'
 import { pinsDeleteV1 } from './routes-v1/pins-delete.js'
 import { pinsGetV1 } from './routes-v1/pins-get.js'
 import { pinsListV1 } from './routes-v1/pins-list.js'
+import {
+  withMode,
+  R,
+  RW,
+  getMaintenanceMode,
+} from './middleware/maintenance.js'
 
 const log = debug('router')
 
@@ -46,13 +52,13 @@ const r = new Router({
 })
 
 // Monitoring
-r.add('get', '/metrics', metrics)
+r.add('get', '/metrics', withMode(metrics, R))
 
 // CORS
 r.add('options', '*', cors)
 
 // Auth
-r.add('post', '/login', login, [postCors])
+r.add('post', '/login', withMode(login, R), [postCors])
 
 // Version
 r.add('get', '/version', (event) => {
@@ -60,61 +66,62 @@ r.add('get', '/version', (event) => {
     version: VERSION,
     commit: COMMITHASH,
     branch: BRANCH,
+    mode: getMaintenanceMode(),
   })
 })
 
 // Remote Pinning API
-r.add('get', '/api/pins', pinsList, [postCors])
-r.add('get', '/api/pins/:requestid', pinsGet, [postCors])
-r.add('post', '/api/pins', pinsAdd, [postCors])
-r.add('post', '/api/pins/:requestid', pinsReplace, [postCors])
-r.add('delete', '/api/pins/:requestid', pinsDelete, [postCors])
+r.add('get', '/api/pins', withMode(pinsList, R), [postCors])
+r.add('get', '/api/pins/:requestid', withMode(pinsGet, R), [postCors])
+r.add('post', '/api/pins', withMode(pinsAdd, RW), [postCors])
+r.add('post', '/api/pins/:requestid', withMode(pinsReplace, RW), [postCors])
+r.add('delete', '/api/pins/:requestid', withMode(pinsDelete, RW), [postCors])
 
-r.add('post', '/pins', pinsAdd, [postCors])
-r.add('get', '/pins', pinsList, [postCors])
-r.add('get', '/pins/:requestid', pinsGet, [postCors])
-r.add('post', '/pins/:requestid', pinsReplace, [postCors])
-r.add('delete', '/pins/:requestid', pinsDelete, [postCors])
+r.add('post', '/pins', withMode(pinsAdd, RW), [postCors])
+r.add('get', '/pins', withMode(pinsList, R), [postCors])
+r.add('get', '/pins/:requestid', withMode(pinsGet, R), [postCors])
+r.add('post', '/pins/:requestid', withMode(pinsReplace, RW), [postCors])
+r.add('delete', '/pins/:requestid', withMode(pinsDelete, RW), [postCors])
 
 // V1 routes
-r.add('post', '/v1/login', loginV1, [postCors])
+r.add('post', '/v1/login', withMode(loginV1, R), [postCors])
 
-r.add('get', '/v1/pins', pinsListV1, [postCors])
-r.add('get', '/v1/pins/:requestid', pinsGetV1, [postCors])
-r.add('post', '/v1/pins', pinsAddV1, [postCors])
-r.add('delete', '/v1/pins/:requestid', pinsDeleteV1, [postCors])
+r.add('get', '/v1/pins', withMode(pinsListV1, R), [postCors])
+r.add('get', '/v1/pins/:requestid', withMode(pinsGetV1, R), [postCors])
+r.add('post', '/v1/pins', withMode(pinsAddV1, RW), [postCors])
+r.add('delete', '/v1/pins/:requestid', withMode(pinsDeleteV1, RW), [postCors])
 
-r.add('get', '/v1', nftListV1, [postCors])
-r.add('get', '/v1/:cid', statusV1, [postCors])
-r.add('post', '/v1/upload', uploadV1, [postCors])
-r.add('post', '/v1/store', nftStoreV1, [postCors])
-r.add('delete', '/v1/:cid', nftDeleteV1, [postCors])
+r.add('get', '/v1', withMode(nftListV1, R), [postCors])
+r.add('get', '/v1/:cid', withMode(statusV1, R), [postCors])
+r.add('post', '/v1/upload', withMode(uploadV1, RW), [postCors])
+r.add('post', '/v1/store', withMode(nftStoreV1, RW), [postCors])
+r.add('delete', '/v1/:cid', withMode(nftDeleteV1, RW), [postCors])
 
-r.add('get', '/v1/check/:cid', checkV1, [postCors])
+r.add('get', '/v1/check/:cid', withMode(checkV1, R), [postCors])
 
-r.add('get', '/v1/internal/tokens', tokensListV1, [postCors])
-r.add('post', '/v1/internal/tokens', tokensCreateV1, [postCors])
-r.add('delete', '/v1/internal/tokens', tokensDeleteV1, [postCors])
+r.add('get', '/v1/internal/tokens', withMode(tokensListV1, R), [postCors])
+r.add('post', '/v1/internal/tokens', withMode(tokensCreateV1, RW), [postCors])
+r.add('delete', '/v1/internal/tokens', withMode(tokensDeleteV1, RW), [postCors])
 
 // Public API
-r.add('get', '/api', list, [postCors])
-r.add('get', '/api/check/:cid', check, [postCors])
-r.add('get', '/api/:cid', status, [postCors])
-r.add('post', '/api/upload', upload, [postCors])
-r.add('delete', '/api/:cid', remove, [postCors])
+r.add('get', '/api', withMode(list, R), [postCors])
+r.add('get', '/api/check/:cid', withMode(check, R), [postCors])
+r.add('get', '/api/:cid', withMode(status, R), [postCors])
+r.add('post', '/api/upload', withMode(upload, RW), [postCors])
+r.add('delete', '/api/:cid', withMode(remove, RW), [postCors])
 
-r.add('get', '', list, [postCors])
-r.add('get', '/check/:cid', check, [postCors])
-r.add('get', '/:cid', status, [postCors])
-r.add('post', '/upload', upload, [postCors])
-r.add('post', '/store', store, [postCors])
-r.add('delete', '/:cid', remove, [postCors])
+r.add('get', '', withMode(list, R), [postCors])
+r.add('get', '/check/:cid', withMode(check, R), [postCors])
+r.add('get', '/:cid', withMode(status, R), [postCors])
+r.add('post', '/upload', withMode(upload, RW), [postCors])
+r.add('post', '/store', withMode(store, RW), [postCors])
+r.add('delete', '/:cid', withMode(remove, RW), [postCors])
 
 // Private API
-r.add('get', '/internal/tokens', tokensList, [postCors])
-r.add('post', '/internal/tokens', tokensCreate, [postCors])
-r.add('delete', '/internal/tokens', tokensDelete, [postCors])
-r.add('get', '/internal/list2', getNFT, [postCors])
+r.add('get', '/internal/tokens', withMode(tokensList, R), [postCors])
+r.add('post', '/internal/tokens', withMode(tokensCreate, RW), [postCors])
+r.add('delete', '/internal/tokens', withMode(tokensDelete, RW), [postCors])
+r.add('get', '/internal/list2', withMode(getNFT, R), [postCors])
 
 r.add('all', '*', notFound)
 addEventListener('fetch', r.listen.bind(r))

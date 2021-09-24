@@ -29,6 +29,7 @@ declare global {
   const BRANCH: string
   const VERSION: string
   const COMMITHASH: string
+  const MAINTENANCE_MODE: 'rw' | 'r-' | '--'
 }
 
 export interface RouteContext {

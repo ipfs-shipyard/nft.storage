@@ -180,3 +180,19 @@ cd packages/api
 yarn install
 yarn dev --env USER
 ```
+
+## Maintenance Mode
+
+The API can be put into maintenance mode to prevent writes or prevent reads _and_ writes.
+
+To change the maintenance mode for the API, issue the following command:
+
+```sh
+wrangler secret put MAINTENANCE_MODE --env production
+```
+
+When prompted for a value enter one of the following permission combinations:
+
+- `--` = no reading or writing
+- `r-` = read only mode
+- `rw` = read and write (normal operation)
