@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { CID } from 'multiformats'
 import * as Token from '../../client/src/token.js'
-import { createTestUser, dbClient } from './scripts/helpers.js'
+import { createTestUser, rawClient } from './scripts/helpers.js'
 
 describe('V1 - /store', () => {
   it('should store image', async () => {
@@ -60,7 +60,7 @@ describe('V1 - /store', () => {
       'response structure'
     )
 
-    const { data, error } = await dbClient
+    const { data, error } = await rawClient
       .from('upload')
       .select('*, content(cid, dag_size, pin(content_cid, status, service))')
       .match({ content_cid: result.ipnft, account_id: userId })

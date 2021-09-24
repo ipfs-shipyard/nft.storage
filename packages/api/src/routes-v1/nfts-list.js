@@ -1,6 +1,6 @@
 import { JSONResponse } from '../utils/json-response.js'
 import { validate } from '../utils/auth-v1.js'
-import { toNFTResponse } from '../utils/db-client.js'
+import { toNFTResponse } from '../utils/db-transforms.js'
 
 /** @type {import('../utils/router.js').Handler} */
 export async function nftListV1(event, ctx) {

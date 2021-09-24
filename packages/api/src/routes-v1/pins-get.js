@@ -1,8 +1,7 @@
 import { validate } from '../utils/auth-v1.js'
+import { toPinsResponse } from '../utils/db-transforms.js'
 import { JSONResponse } from '../utils/json-response.js'
-
 import { parseCidPinning } from '../utils/utils.js'
-import { toPinsResponse } from '../utils/db-client.js'
 
 /** @type {import('../utils/router.js').Handler} */
 export async function pinsGetV1(event, ctx) {

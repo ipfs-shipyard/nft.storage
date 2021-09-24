@@ -27,6 +27,7 @@ export type UploadOutput = definitions['upload'] & {
   content: Pick<definitions['content'], 'dag_size'> & {
     pin: Pick<definitions['pin'], 'service' | 'status'>[]
   }
+  deals: Deal[]
 }
 
 export interface CreateUploadInput {

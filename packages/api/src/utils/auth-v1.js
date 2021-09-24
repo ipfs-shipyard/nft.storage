@@ -1,11 +1,11 @@
 import { Magic } from '@magic-sdk/admin'
-import { secrets } from '../constants.js'
+import { secrets, database } from '../constants.js'
 import { HTTPError, ErrorUserNotFound, ErrorTokenNotFound } from '../errors.js'
 import { parseJWT, verifyJWT } from './jwt.js'
-import { createDBClient } from './db-client.js'
+import { DBClient } from './db-client.js'
 export const magic = new Magic(secrets.magic)
 
-const db = createDBClient()
+const db = new DBClient(database.url, secrets.database)
 
 /**
  * @typedef {import('../models/users').User} User

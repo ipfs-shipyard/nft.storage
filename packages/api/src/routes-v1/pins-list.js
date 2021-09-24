@@ -3,7 +3,7 @@ import { validate } from '../utils/auth-v1.js'
 import { JSONResponse } from '../utils/json-response.js'
 import { Validator } from '@cfworker/json-schema'
 import { parseCidPinning } from '../utils/utils.js'
-import { toPinsResponse } from '../utils/db-client.js'
+import { toPinsResponse } from '../utils/db-transforms.js'
 
 /**
  * @typedef {import('../utils/db-client-types').ListUploadsOptions} ListUploadsOptions
