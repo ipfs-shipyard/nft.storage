@@ -1,6 +1,6 @@
 {
   "name": "cron",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "NFT Storage Cron Jobs",
   "private": true,
   "main": "src/index.js",
